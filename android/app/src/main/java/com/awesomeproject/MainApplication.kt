@@ -1,4 +1,4 @@
-package com.vinafood
+package com.vinafood.rn
 
 import android.app.Application
 import com.facebook.react.PackageList

@@ -1,0 +1,207 @@
+{
+  "project_info": {
+    "project_number": "132894885676",
+    "firebase_url": "https://musicplayerz-63f2e-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "musicplayerz-63f2e",
+    "storage_bucket": "musicplayerz-63f2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132894885676:android:a291fb4a0412d3893ece89",
+        "android_client_info": {
+          "package_name": "com.vinafood.rn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132894885676-pnscme2elos2f3bmjljhmg4bnpp67c55.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vinafood.rn",
+            "certificate_hash": "01bb02c15d839cc01dbd807f8011f92428846a82"
+          }
+        },
+        {
+          "client_id": "132894885676-j1ejud1ih6re9aurn5uv7g6h6hgaq5o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqL2eDQ3jcssbQVQMaLCSmagG5ZqNPk4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132894885676-6ksv2182tgel523jga8u6un6goprlpfb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "132894885676-25skfndv5f9c0300486aj8rfd602sqpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nhom24.doan2023199.appDacSan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132894885676:android:ddc284b1e8ff31913ece89",
+        "android_client_info": {
+          "package_name": "com.example.appcsn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132894885676-j1ejud1ih6re9aurn5uv7g6h6hgaq5o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqL2eDQ3jcssbQVQMaLCSmagG5ZqNPk4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132894885676-6ksv2182tgel523jga8u6un6goprlpfb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "132894885676-25skfndv5f9c0300486aj8rfd602sqpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nhom24.doan2023199.appDacSan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132894885676:android:bf0192be527b9fdf3ece89",
+        "android_client_info": {
+          "package_name": "com.example.gui_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132894885676-j1ejud1ih6re9aurn5uv7g6h6hgaq5o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqL2eDQ3jcssbQVQMaLCSmagG5ZqNPk4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132894885676-6ksv2182tgel523jga8u6un6goprlpfb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "132894885676-25skfndv5f9c0300486aj8rfd602sqpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nhom24.doan2023199.appDacSan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132894885676:android:52a9e90c1e8142213ece89",
+        "android_client_info": {
+          "package_name": "com.zerofps.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132894885676-j1ejud1ih6re9aurn5uv7g6h6hgaq5o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqL2eDQ3jcssbQVQMaLCSmagG5ZqNPk4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132894885676-6ksv2182tgel523jga8u6un6goprlpfb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "132894885676-25skfndv5f9c0300486aj8rfd602sqpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nhom24.doan2023199.appDacSan"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132894885676:android:d3bd4cb7b9b07ce63ece89",
+        "android_client_info": {
+          "package_name": "nhom_24.doan_2023_199.app_dac_san"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "132894885676-8siuupgrpkggtceu9crfia9gm3b969pn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nhom_24.doan_2023_199.app_dac_san",
+            "certificate_hash": "7f94ac5231759334edaa4a60b0e5878da5418d51"
+          }
+        },
+        {
+          "client_id": "132894885676-j1ejud1ih6re9aurn5uv7g6h6hgaq5o7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqL2eDQ3jcssbQVQMaLCSmagG5ZqNPk4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "132894885676-6ksv2182tgel523jga8u6un6goprlpfb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "132894885676-25skfndv5f9c0300486aj8rfd602sqpn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nhom24.doan2023199.appDacSan"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
