@@ -66,25 +66,7 @@ export const FoodSearchScreen = (props: SearchScreenProps) => {
 
   return (
     <SafeAreaProvider>
-      <View style={style.topNavBar}>
-        <Image
-          source={{uri: 'https://picsum.photos/50'}}
-          width={50}
-          height={50}
-          style={style.avatar}
-        />
-        <TextInput
-          style={style.searchBar}
-          placeholder={'Tìm kiếm đặc sản'}
-          onChangeText={text => {
-            query = text;
-          }}
-          onSubmitEditing={() => {
-            props.navigation.navigate('Tìm kiếm đặc sản', {query: query});
-          }}
-        />
-      </View>
-      <Text style={style.header}>Đặc sản</Text>
+      <Text style={style.header}>Kết quả tìm kiếm của từ khóa "{query}"</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         refreshing={isLoading}

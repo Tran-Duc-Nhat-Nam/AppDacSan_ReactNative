@@ -2,72 +2,24 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {Dispatch, SetStateAction} from 'react';
 import {NguoiDung} from '../models/NguoiDung';
 import {
-  LuotDanhGiaDacSan,
-  LuotDanhGiaDacSanUI,
-} from '../models/LuotDanhGiaDacSan';
+  LuotDanhGiaNoiBan,
+  LuotDanhGiaNoiBanUI,
+} from '../models/LuotDanhGiaNoiBan';
 
-export class UserManager {
+export class NoiBanManager {
   constructor() {}
 
-  static subscribe = async (
-    setUser: Dispatch<SetStateAction<FirebaseAuthTypes.User | undefined>>,
-  ) => {
-    auth().onAuthStateChanged(user => {
-      if (user) {
-        setUser(user);
-        console.log(user.uid);
-      } else {
-        setUser(undefined);
-        console.log('No user');
-      }
-    });
-  };
-
-  static login = (username: string, password: string) => {
-    auth()
-      .signInWithEmailAndPassword(username, password)
-      .then(cre => {
-        console.log('User ' + cre.user.uid + ' signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
-  };
-
-  static getUser = async (
-    setND: Dispatch<SetStateAction<NguoiDung | undefined>>,
-  ) => {
-    auth().onAuthStateChanged(async user => {
-      if (user) {
-        const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/nguoidung/' + user?.uid,
-        );
-        const json = await response.json();
-        setND(json);
-      } else {
-        console.log('No ND');
-      }
-    });
-  };
   static getReviews = async (
-    dsID: number,
-    setDG: Dispatch<SetStateAction<LuotDanhGiaDacSanUI[]>>,
+    id: number,
+    setDG: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI[]>>,
   ) => {
     auth().onAuthStateChanged(async user => {
       const response = await fetch(
-        'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/dacsan=' + dsID,
+        'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' + id,
       );
       const json = await response.json();
-      var result: LuotDanhGiaDacSanUI[] = [];
-      var tempList: LuotDanhGiaDacSan[] = json;
+      var result: LuotDanhGiaNoiBanUI[] = [];
+      var tempList: LuotDanhGiaNoiBan[] = json;
 
       for (let item of tempList) {
         const response2 = await fetch(
@@ -100,14 +52,14 @@ export class UserManager {
   };
 
   static getUserReview = async (
-    dsID: number,
-    setState: Dispatch<SetStateAction<LuotDanhGiaDacSanUI | undefined>>,
+    id: number,
+    setState: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI | undefined>>,
   ) => {
     auth().onAuthStateChanged(async user => {
       if (user) {
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/dacsan=' +
-            dsID +
+          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' +
+            id +
             '/nguoidung=' +
             user.uid,
         );
@@ -128,19 +80,19 @@ export class UserManager {
 
   static reviewAPI = async (
     method: string,
-    review: LuotDanhGiaDacSan,
-    setState: Dispatch<SetStateAction<LuotDanhGiaDacSanUI | undefined>>,
+    review: LuotDanhGiaNoiBan,
+    setState: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI | undefined>>,
   ) => {
     auth().onAuthStateChanged(async user => {
       if (user) {
         review.id_nguoi_dung = user.uid;
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/dacsan=' +
-            review.id_dac_san,
+          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' +
+            review.id_noi_ban,
           {
             method: method,
             body: JSON.stringify(review, (key, value) =>
-              UserManager.replacer(key, value),
+              NoiBanManager.replacer(key, value),
             ),
           },
         );
@@ -162,28 +114,28 @@ export class UserManager {
   };
 
   static review = async (
-    review: LuotDanhGiaDacSan,
-    setState: Dispatch<SetStateAction<LuotDanhGiaDacSanUI | undefined>>,
+    review: LuotDanhGiaNoiBan,
+    setState: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI | undefined>>,
   ) => {
     this.reviewAPI('POST', review, setState);
   };
 
   static editReview = async (
-    review: LuotDanhGiaDacSan,
-    setState: Dispatch<SetStateAction<LuotDanhGiaDacSanUI | undefined>>,
+    review: LuotDanhGiaNoiBan,
+    setState: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI | undefined>>,
   ) => {
     this.reviewAPI('PUT', review, setState);
   };
 
   static deleteReview = async (
-    dsID: number,
-    setState: Dispatch<SetStateAction<LuotDanhGiaDacSanUI | undefined>>,
+    id: number,
+    setState: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI | undefined>>,
   ) => {
     auth().onAuthStateChanged(async user => {
       if (user) {
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/dacsan=' +
-            dsID +
+          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' +
+            id +
             '/nguoidung=' +
             user.uid,
           {
