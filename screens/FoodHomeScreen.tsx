@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   ImageSourcePropType,
 } from 'react-native';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import {useEffect, useState} from 'react';
 import {VungMien} from '../models/VungMien';
 import {DacSan} from '../models/DacSan';
-import {Searchbar, TextInput} from 'react-native-paper';
+import {DefaultTheme, Searchbar, TextInput} from 'react-native-paper';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Icon} from 'react-native-paper';
@@ -49,8 +49,17 @@ export const FoodHomeScreen = (props: HomeScreenProps) => {
 
   return (
     <SafeAreaProvider>
-      <View style={style.topNavBar}></View>
-      <Text style={style.header}>Đặc sản</Text>
+      <Text
+        style={[
+          style.header,
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.primaryContainer
+              : lightTheme.colors.primary,
+          },
+        ]}>
+        Đặc sản
+      </Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         refreshing={isLoading}
@@ -58,7 +67,9 @@ export const FoodHomeScreen = (props: HomeScreenProps) => {
           getVMFromApi();
         }}
         style={{
-          backgroundColor: 'azure',
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.background
+            : DefaultTheme.colors.background,
           height: '96%',
         }}
         data={vm}
@@ -102,10 +113,26 @@ const FoodRow = (props: VMProps) => {
   ) : (
     <View
       style={[
-        {backgroundColor: isDarkMode ? 'gray' : 'skyblue'},
+        {
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.secondaryContainer
+            : lightTheme.colors.secondaryContainer,
+        },
         foodStyle.container,
       ]}>
-      <Text style={foodStyle.containerHeader} numberOfLines={1}>
+      <Text
+        style={[
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.primaryContainer
+              : lightTheme.colors.secondary,
+            color: isDarkMode
+              ? darkTheme.colors.onPrimaryContainer
+              : lightTheme.colors.onSecondary,
+          },
+          foodStyle.containerHeader,
+        ]}
+        numberOfLines={1}>
         {props.vm.ten}
       </Text>
       <FlatList
@@ -126,6 +153,7 @@ type DSProps = {
 };
 
 const FoodItem = (props: DSProps) => {
+  var isDarkMode = useColorScheme() === 'dark';
   const [src, setSrc] = useState<ImageSourcePropType>({
     uri: props.ds.hinh_dai_dien.url,
   });
@@ -141,16 +169,31 @@ const FoodItem = (props: DSProps) => {
         <Image
           source={src}
           alt={props.ds.hinh_dai_dien.ten}
-          defaultSource={require('../assets/food.png')}
           style={foodStyle.itemImage}
           width={80}
           height={80}
         />
-        <Text style={foodStyle.itemTitle} numberOfLines={1}>
+        <Text
+          style={[
+            foodStyle.itemTitle,
+            {
+              color: isDarkMode
+                ? darkTheme.colors.onSecondaryContainer
+                : lightTheme.colors.onSecondaryContainer,
+            },
+          ]}
+          numberOfLines={1}>
           {props.ds.ten}
         </Text>
         <View style={foodStyle.itemReview}>
-          <Text>{props.ds.diem_danh_gia}</Text>
+          <Text
+            style={{
+              color: isDarkMode
+                ? darkTheme.colors.onSecondaryContainer
+                : lightTheme.colors.onSecondaryContainer,
+            }}>
+            {props.ds.diem_danh_gia}
+          </Text>
           <Image
             source={require('../assets/star.png')}
             style={foodStyle.itemReviewImage}
@@ -172,8 +215,6 @@ const foodStyle = StyleSheet.create({
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     paddingLeft: 10,
-    color: 'white',
-    backgroundColor: 'dodgerblue',
   },
   verticleLine: {
     height: '100%',
@@ -194,6 +235,7 @@ const foodStyle = StyleSheet.create({
   },
   itemImage: {
     borderRadius: 10,
+    height: 80,
     resizeMode: 'cover',
   },
   itemReview: {

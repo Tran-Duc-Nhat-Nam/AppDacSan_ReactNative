@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import {useEffect, useState} from 'react';
 import {VungMien} from '../models/VungMien';
 import {DacSan} from '../models/DacSan';
@@ -25,6 +25,7 @@ type SearchScreenProps = {
 
 export const PlaceHomeScreen = (props: SearchScreenProps) => {
   const [isLoading, setLoading] = useState(true);
+  var isDarkMode = useColorScheme() === 'dark';
   const [isEnd, setEnd] = useState(false);
   const [page, setPage] = useState(0);
   const [nb, setNB] = useState<NoiBan[]>([]);
@@ -64,7 +65,20 @@ export const PlaceHomeScreen = (props: SearchScreenProps) => {
 
   return (
     <SafeAreaProvider>
-      <Text style={style.header}>Đặc sản</Text>
+      <Text
+        style={[
+          style.header,
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.primaryContainer
+              : lightTheme.colors.primary,
+            color: isDarkMode
+              ? darkTheme.colors.onPrimaryContainer
+              : lightTheme.colors.onSecondary,
+          },
+        ]}>
+        Đặc sản
+      </Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         refreshing={isLoading}
@@ -72,7 +86,9 @@ export const PlaceHomeScreen = (props: SearchScreenProps) => {
         onEndReached={() => getVMFromApi(10)}
         onEndReachedThreshold={0.1}
         style={{
-          backgroundColor: 'azure',
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.background
+            : lightTheme.colors.background,
           height: '96%',
         }}
         data={nb}
@@ -100,21 +116,48 @@ const PlaceItem = (props: NBProps) => {
       }}>
       <View
         style={[
-          {backgroundColor: isDarkMode ? 'gray' : 'skyblue'},
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.secondaryContainer
+              : lightTheme.colors.secondaryContainer,
+          },
           foodStyle.item,
         ]}>
         <View style={foodStyle.itemInfo}>
-          <Text numberOfLines={1}>{props.nb.ten}</Text>
+          <Text
+            numberOfLines={1}
+            style={{
+              color: isDarkMode
+                ? darkTheme.colors.onSecondaryContainer
+                : lightTheme.colors.onSecondaryContainer,
+            }}>
+            {props.nb.ten}
+          </Text>
           <View style={{height: 3}} />
           <View style={foodStyle.itemReview}>
-            <Text>{props.nb.diem_danh_gia}</Text>
+            <Text
+              style={{
+                color: isDarkMode
+                  ? darkTheme.colors.onSecondaryContainer
+                  : lightTheme.colors.onSecondaryContainer,
+              }}>
+              {props.nb.diem_danh_gia}
+            </Text>
             <Image
               source={require('../assets/star.png')}
               style={foodStyle.itemReviewImage}
             />
           </View>
           <View style={{height: 3}} />
-          <Text numberOfLines={2}>{props.nb.mo_ta}</Text>
+          <Text
+            numberOfLines={2}
+            style={{
+              color: isDarkMode
+                ? darkTheme.colors.onSecondaryContainer
+                : lightTheme.colors.onSecondaryContainer,
+            }}>
+            {props.nb.mo_ta}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

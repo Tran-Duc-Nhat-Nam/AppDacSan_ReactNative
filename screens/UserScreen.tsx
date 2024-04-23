@@ -1,5 +1,5 @@
 import {useColorScheme, SafeAreaView, Text, View, Button} from 'react-native';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {useState, useEffect} from 'react';
 
@@ -23,7 +23,9 @@ export const UserScreen = (props: HomeScreenProps) => {
   return (
     <SafeAreaProvider
       style={{
-        backgroundColor: isDarkMode ? 'gold' : 'azure',
+        backgroundColor: isDarkMode
+          ? darkTheme.colors.primaryContainer
+          : lightTheme.colors.primaryContainer,
         flex: 1,
       }}>
       <Text style={style.header}>Thông tin người dùng</Text>
