@@ -12,16 +12,16 @@ import {
 import {darkTheme, lightTheme, style} from '../App';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {UserManager} from '../data/UserManager';
-import {DefaultTheme, Icon} from 'react-native-paper';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Icon} from 'react-native-paper';
+import DatePicker from 'react-native-date-picker';
 
-type LoginScreenProps = {
-  navigation: NativeStackNavigationProp<any, any>;
-};
-
-export const LoginScreen = (props: LoginScreenProps) => {
-  const [username, setUsername] = useState('');
+export const SignupScreen = () => {
+  const [email, setEmail] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+
   const [isHide, setHide] = useState(true);
   var isDarkMode = useColorScheme() === 'dark';
 
@@ -38,9 +38,30 @@ export const LoginScreen = (props: LoginScreenProps) => {
       ]}>
       <TextInput
         style={loginStyle.input}
+        placeholder="Email"
+        onChangeText={text => setEmail(text)}
+        value={email}
+      />
+      <TextInput
+        style={loginStyle.input}
         placeholder="Tên tài khoản"
         onChangeText={text => setUsername(text)}
         value={username}
+      />
+      <Pressable style={loginStyle.input} onPress={() => setOpen(true)}>
+        <Text>Date of birth: {date.toLocaleDateString()}</Text>
+      </Pressable>
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        onConfirm={date => {
+          setOpen(false);
+          setDate(date);
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
       />
       <View style={loginStyle.input}>
         <TextInput
@@ -60,7 +81,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
       </Pressable>
       <Pressable
         style={loginStyle.signupButton}
-        onPress={() => props.navigation.navigate('Đăng ký')}>
+        onPress={() => UserManager.login(username, password)}>
         <Text style={loginStyle.loginButtonText}>Đăng ký</Text>
       </Pressable>
     </SafeAreaProvider>

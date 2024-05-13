@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import {useEffect, useState} from 'react';
 import {VungMien} from '../models/VungMien';
 import {DacSan} from '../models/DacSan';
@@ -17,12 +17,14 @@ import {DacSan} from '../models/DacSan';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
+import {url} from '../data/UserManager';
 
 type SearchScreenProps = {
   navigation: NativeStackNavigationProp<any, any>;
 };
 
 export const FoodSearchScreen = (props: SearchScreenProps) => {
+  var isDarkMode = useColorScheme() === 'dark';
   const [isLoading, setLoading] = useState(true);
   const [isEnd, setEnd] = useState(false);
   const [page, setPage] = useState(0);
@@ -39,12 +41,7 @@ export const FoodSearchScreen = (props: SearchScreenProps) => {
       if (!isEnd) {
         setLoading(true);
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/dacsan/ten=' +
-            query +
-            '/size=' +
-            size +
-            '/index=' +
-            page,
+          url + 'dacsan/ten=' + query + '/size=' + size + '/index=' + page,
         );
         const json = await response.json();
         if (json.length > 0) {
@@ -66,14 +63,26 @@ export const FoodSearchScreen = (props: SearchScreenProps) => {
 
   return (
     <SafeAreaProvider>
-      <Text style={style.header}>Kết quả tìm kiếm của từ khóa "{query}"</Text>
+      <Text
+        style={[
+          style.header,
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.primaryContainer
+              : lightTheme.colors.primary,
+          },
+        ]}>
+        Kết quả tìm kiếm của từ khóa "{query}"
+      </Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         refreshing={isLoading}
         onRefresh={() => getVMFromApi(query, 5)}
         onEndReached={() => getVMFromApi(query, 5)}
         style={{
-          backgroundColor: 'azure',
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.background
+            : lightTheme.colors.background,
           height: '96%',
         }}
         data={ds}
@@ -99,7 +108,11 @@ const FoodItem = (props: DSProps) => {
       }}>
       <View
         style={[
-          {backgroundColor: isDarkMode ? 'gray' : 'skyblue'},
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.secondaryContainer
+              : lightTheme.colors.secondaryContainer,
+          },
           foodStyle.item,
         ]}>
         <Image
@@ -133,6 +146,8 @@ const foodStyle = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 15,
     margin: 10,
+    marginTop: 18,
+    marginBottom: 0,
     alignItems: 'center',
   },
   itemInfo: {

@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import {useRoute} from '@react-navigation/native';
 import {DacSan} from '../models/DacSan';
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
@@ -18,7 +18,7 @@ import {Button, Chip, Icon, TextInput} from 'react-native-paper';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {UserManager} from '../data/UserManager';
+import {url, UserManager} from '../data/UserManager';
 import {LuotDanhGiaDacSanUI} from '../models/LuotDanhGiaDacSan';
 import ViewMoreText from 'react-native-view-more-text';
 import {
@@ -51,9 +51,7 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
 
   const getDSFromApi = async () => {
     try {
-      const response = await fetch(
-        'https://dacsanimage-b5os5eg63q-de.a.run.app/dacsan/' + itemId,
-      );
+      const response = await fetch(url + 'dacsan/' + itemId);
       const json = await response.json();
       setDS(json);
       setLoading(false);
@@ -66,12 +64,24 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
     <ActivityIndicator />
   ) : (
     <SafeAreaProvider>
+      <Text
+        style={[
+          style.header,
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.primaryContainer
+              : lightTheme.colors.primary,
+          },
+        ]}>
+        {ds ? ds.ten : ''}
+      </Text>
       <ScrollView
         style={{
-          backgroundColor: isDarkMode ? 'black' : 'azure',
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.background
+            : lightTheme.colors.background,
           flex: 1,
         }}>
-        <Text style={style.header}>{ds ? ds.ten : ''}</Text>
         <View style={{height: 8}} />
         <Image
           source={{uri: ds!.hinh_dai_dien.url}}
@@ -82,21 +92,62 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
         <View
           style={[
             detailStyle.section,
-            {flexDirection: 'row', justifyContent: 'space-around', padding: 10},
+            {
+              backgroundColor: isDarkMode
+                ? darkTheme.colors.secondaryContainer
+                : lightTheme.colors.secondaryContainer,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              padding: 10,
+            },
           ]}>
           <Stat number={ds!.luot_xem} title="Lượt xem" />
           <Stat number={ds!.luot_danh_gia} title="Lượt đánh giá" />
           <Stat number={ds!.diem_danh_gia} title="Điểm trung bình" />
         </View>
-        <View style={detailStyle.section}>
+        <View
+          style={[
+            detailStyle.section,
+            {
+              backgroundColor: isDarkMode
+                ? darkTheme.colors.secondaryContainer
+                : lightTheme.colors.secondaryContainer,
+            },
+          ]}>
           <Text style={detailStyle.sectionHeader}>Mô tả</Text>
           <SectionTextBody title={ds!.mo_ta} numberOfLines={4} />
         </View>
-        <View style={detailStyle.section}>
-          <Text style={detailStyle.sectionHeader}>Cách chế biến</Text>
+        <View
+          style={[
+            detailStyle.section,
+            {
+              backgroundColor: isDarkMode
+                ? darkTheme.colors.secondaryContainer
+                : lightTheme.colors.secondaryContainer,
+            },
+          ]}>
+          <Text
+            style={[
+              detailStyle.section,
+              {
+                backgroundColor: isDarkMode
+                  ? darkTheme.colors.secondaryContainer
+                  : lightTheme.colors.secondaryContainer,
+              },
+            ]}>
+            Cách chế biến
+          </Text>
           <SectionTextBody title={ds!.cach_che_bien} numberOfLines={4} />
         </View>
-        <View style={detailStyle.section}>
+        <View
+          style={[
+            detailStyle.section,
+            {
+              backgroundColor: isDarkMode
+                ? darkTheme.colors.secondaryContainer
+                : lightTheme.colors.secondaryContainer,
+            },
+          ]}>
           <Text style={detailStyle.sectionHeader}>Vùng miền</Text>
           <FlatList
             scrollEnabled={false}
@@ -113,7 +164,15 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
               );
             }}></FlatList>
         </View>
-        <View style={detailStyle.section}>
+        <View
+          style={[
+            detailStyle.section,
+            {
+              backgroundColor: isDarkMode
+                ? darkTheme.colors.secondaryContainer
+                : lightTheme.colors.secondaryContainer,
+            },
+          ]}>
           <Text style={detailStyle.sectionHeader}>Mùa</Text>
           <FlatList
             scrollEnabled={false}
@@ -134,7 +193,15 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
               );
             }}></FlatList>
         </View>
-        <View style={detailStyle.section}>
+        <View
+          style={[
+            detailStyle.section,
+            {
+              backgroundColor: isDarkMode
+                ? darkTheme.colors.secondaryContainer
+                : lightTheme.colors.secondaryContainer,
+            },
+          ]}>
           <Text style={detailStyle.sectionHeader}>Nguyên liệu</Text>
           <FlatList
             scrollEnabled={false}
@@ -162,7 +229,15 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
           isVisible={isCommentVisible}
           children={
             <MenuProvider>
-              <View style={detailStyle.commentSection}>
+              <View
+                style={[
+                  detailStyle.commentSection,
+                  {
+                    backgroundColor: isDarkMode
+                      ? darkTheme.colors.primaryContainer
+                      : lightTheme.colors.primaryContainer,
+                  },
+                ]}>
                 <View
                   style={{
                     padding: 10,
@@ -181,14 +256,12 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
                   <Text>/ {nd.length}</Text>
                   <Icon source={'account-edit'} size={20} />
                 </View>
-                <View
-                  style={{
-                    height: 1,
-                    width: '100%',
-                    backgroundColor: 'gray',
-                  }}
-                />
                 <FlatList
+                  style={{
+                    backgroundColor: isDarkMode
+                      ? darkTheme.colors.background
+                      : lightTheme.colors.background,
+                  }}
                   scrollEnabled={false}
                   data={nd}
                   renderItem={({item}) => {
@@ -197,10 +270,13 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
                     ) : (
                       <View
                         style={{
-                          backgroundColor: '#A5C8FF',
                           borderRadius: 5,
                           marginTop: 10,
                           marginHorizontal: 8,
+
+                          backgroundColor: isDarkMode
+                            ? darkTheme.colors.secondaryContainer
+                            : lightTheme.colors.secondaryContainer,
                         }}>
                         <View
                           style={{
@@ -223,7 +299,7 @@ export const FoodDetailsScreen = (props: HomeScreenProps) => {
                     );
                   }}
                 />
-                <View style={detailStyle.selfComment}>
+                <View style={[detailStyle.selfComment]}>
                   {selfComment &&
                   selfComment.luot_danh_gia?.id_nguoi_dung &&
                   !selfComment.is_placeholder ? (
@@ -445,7 +521,6 @@ export const detailStyle = StyleSheet.create({
   commentSection: {
     height: '100%',
     width: '85%',
-    backgroundColor: 'white',
     borderRadius: 15,
     alignSelf: 'center',
   },
@@ -456,7 +531,6 @@ export const detailStyle = StyleSheet.create({
   selfCommentBody: {
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
-    backgroundColor: '#A5C8FF',
   },
   stat: {
     margin: 5,

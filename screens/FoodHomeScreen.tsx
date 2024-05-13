@@ -16,7 +16,7 @@ import {DacSan} from '../models/DacSan';
 import {DefaultTheme, Searchbar, TextInput} from 'react-native-paper';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Icon} from 'react-native-paper';
+import {url} from '../data/UserManager';
 
 type HomeScreenProps = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -34,9 +34,7 @@ export const FoodHomeScreen = (props: HomeScreenProps) => {
   const getVMFromApi = async () => {
     try {
       setLoading(true);
-      const response = await fetch(
-        'https://dacsanimage-b5os5eg63q-de.a.run.app/vungmien/',
-      );
+      const response = await fetch(url + 'vungmien/');
       const json = await response.json();
       setVM(json);
     } catch (error) {
@@ -69,7 +67,7 @@ export const FoodHomeScreen = (props: HomeScreenProps) => {
         style={{
           backgroundColor: isDarkMode
             ? darkTheme.colors.background
-            : DefaultTheme.colors.background,
+            : lightTheme.colors.background,
           height: '96%',
         }}
         data={vm}
@@ -97,9 +95,7 @@ const FoodRow = (props: VMProps) => {
   const getDSFromApi = async () => {
     try {
       const response = await fetch(
-        'https://dacsanimage-b5os5eg63q-de.a.run.app/dacsan/vungmien=' +
-          props.vm.id +
-          '/size=5/index=0',
+        url + 'dacsan/vungmien=' + props.vm.id + '/size=5/index=0',
       );
       const json = await response.json();
       setDS(json);
@@ -123,12 +119,7 @@ const FoodRow = (props: VMProps) => {
       <Text
         style={[
           {
-            backgroundColor: isDarkMode
-              ? darkTheme.colors.primaryContainer
-              : lightTheme.colors.secondary,
-            color: isDarkMode
-              ? darkTheme.colors.onPrimaryContainer
-              : lightTheme.colors.onSecondary,
+            backgroundColor: 'dodgerblue',
           },
           foodStyle.containerHeader,
         ]}

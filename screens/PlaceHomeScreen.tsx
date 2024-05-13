@@ -18,6 +18,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
 import {NoiBan} from '../models/NoiBan';
+import {url} from '../data/UserManager';
 
 type SearchScreenProps = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -40,10 +41,7 @@ export const PlaceHomeScreen = (props: SearchScreenProps) => {
       if (!isEnd) {
         setLoading(true);
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/noiban/ten=/size=' +
-            size +
-            '/index=' +
-            page,
+          url + 'noiban/ten=/size=' + size + '/index=' + page,
         );
         const json = await response.json();
         if (json.length > 0) {

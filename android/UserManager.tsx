@@ -1,5 +1,5 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction} from 'react';
 import {NguoiDung} from '../models/NguoiDung';
 import {
   LuotDanhGiaDacSan,
@@ -36,12 +36,10 @@ export class UserManager {
       });
   };
 
-  static signup = (username: string, password: string, user: NguoiDung) => {
-    const [nd, setND] = useState<NguoiDung>();
+  static signup = (username: string, password: string) => {
     auth()
       .createUserWithEmailAndPassword(username, password)
       .then(cre => {
-        this.addUser(user, setND);
         console.log('User ' + cre.user.uid + ' signed up!');
       })
       .catch(error => {

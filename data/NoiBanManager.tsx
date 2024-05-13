@@ -5,6 +5,7 @@ import {
   LuotDanhGiaNoiBan,
   LuotDanhGiaNoiBanUI,
 } from '../models/LuotDanhGiaNoiBan';
+import {url} from './UserManager';
 
 export class NoiBanManager {
   constructor() {}
@@ -14,18 +15,13 @@ export class NoiBanManager {
     setDG: Dispatch<SetStateAction<LuotDanhGiaNoiBanUI[]>>,
   ) => {
     auth().onAuthStateChanged(async user => {
-      const response = await fetch(
-        'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' + id,
-      );
+      const response = await fetch(url + 'danhgia/noiban=' + id);
       const json = await response.json();
       var result: LuotDanhGiaNoiBanUI[] = [];
       var tempList: LuotDanhGiaNoiBan[] = json;
 
       for (let item of tempList) {
-        const response2 = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/nguoidung/' +
-            item.id_nguoi_dung,
-        );
+        const response2 = await fetch(url + 'nguoidung/' + item.id_nguoi_dung);
         const json2 = await response2.json();
         result.push({
           luot_danh_gia: item,
@@ -58,15 +54,10 @@ export class NoiBanManager {
     auth().onAuthStateChanged(async user => {
       if (user) {
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' +
-            id +
-            '/nguoidung=' +
-            user.uid,
+          url + 'danhgia/noiban=' + id + '/nguoidung=' + user.uid,
         );
         const json = await response.json();
-        const response2 = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/nguoidung/' + user.uid,
-        );
+        const response2 = await fetch(url + 'nguoidung/' + user.uid);
         const json2 = await response2.json();
         setState({
           luot_danh_gia: json,
@@ -87,8 +78,7 @@ export class NoiBanManager {
       if (user) {
         review.id_nguoi_dung = user.uid;
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' +
-            review.id_noi_ban,
+          url + 'danhgia/noiban=' + review.id_noi_ban,
           {
             method: method,
             body: JSON.stringify(review, (key, value) =>
@@ -98,9 +88,7 @@ export class NoiBanManager {
         );
         const json = await response.json();
         if (json == true) {
-          const response2 = await fetch(
-            'https://dacsanimage-b5os5eg63q-de.a.run.app/nguoidung/' + user.uid,
-          );
+          const response2 = await fetch(url + 'nguoidung/' + user.uid);
           const json2 = await response2.json();
           setState({
             luot_danh_gia: review,
@@ -134,10 +122,7 @@ export class NoiBanManager {
     auth().onAuthStateChanged(async user => {
       if (user) {
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/danhgia/noiban=' +
-            id +
-            '/nguoidung=' +
-            user.uid,
+          url + 'danhgia/noiban=' + id + '/nguoidung=' + user.uid,
           {
             method: 'DELETE',
           },

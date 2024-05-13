@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import {useEffect, useState} from 'react';
 import {VungMien} from '../models/VungMien';
 import {DacSan} from '../models/DacSan';
@@ -18,12 +18,15 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {useRoute} from '@react-navigation/native';
 import {NoiBan} from '../models/NoiBan';
+import {url} from '../data/UserManager';
 
 type SearchScreenProps = {
   navigation: NativeStackNavigationProp<any, any>;
 };
 
 export const PlaceSearchScreen = (props: SearchScreenProps) => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   const [isLoading, setLoading] = useState(true);
   const [isEnd, setEnd] = useState(false);
   const [page, setPage] = useState(0);
@@ -40,12 +43,7 @@ export const PlaceSearchScreen = (props: SearchScreenProps) => {
       if (!isEnd) {
         setLoading(true);
         const response = await fetch(
-          'https://dacsanimage-b5os5eg63q-de.a.run.app/noiban/ten=' +
-            query +
-            '/size=' +
-            size +
-            '/index=' +
-            page,
+          url + 'noiban/ten=' + query + '/size=' + size + '/index=' + page,
         );
         const json = await response.json();
         if (json.length > 0) {
@@ -74,7 +72,9 @@ export const PlaceSearchScreen = (props: SearchScreenProps) => {
         onRefresh={() => getVMFromApi(query, 5)}
         onEndReached={() => getVMFromApi(query, 5)}
         style={{
-          backgroundColor: 'azure',
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.background
+            : lightTheme.colors.background,
           height: '96%',
         }}
         data={nb}

@@ -1,11 +1,14 @@
-import {useColorScheme, SafeAreaView, Text, View, Button} from 'react-native';
+import {useColorScheme, Text, View} from 'react-native';
 import {darkTheme, lightTheme, style} from '../App';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import {useState, useEffect} from 'react';
 
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {UserManager as UserManager} from '../data/UserManager';
+import {NguoiDung} from '../models/NguoiDung';
+import {Button} from 'react-native-paper';
+import {format} from 'date-fns';
 
 export interface HomeScreenProps {
   navigation: NativeStackNavigationProp<any, any>;
@@ -13,23 +16,40 @@ export interface HomeScreenProps {
 
 export const UserScreen = (props: HomeScreenProps) => {
   const isDarkMode = useColorScheme() === 'dark';
-
-  const [user, setUser] = useState<FirebaseAuthTypes.User>();
+  const [user, setUser] = useState<NguoiDung>();
 
   useEffect(() => {
-    UserManager.subscribe(setUser);
+    UserManager.getUser(setUser);
   }, []);
 
   return (
     <SafeAreaProvider
       style={{
         backgroundColor: isDarkMode
-          ? darkTheme.colors.primaryContainer
-          : lightTheme.colors.primaryContainer,
+          ? darkTheme.colors.background
+          : lightTheme.colors.background,
         flex: 1,
       }}>
-      <Text style={style.header}>Thông tin người dùng</Text>
-      <Text style={{padding: 15}}>UID: {user?.uid}</Text>
+      <Text
+        style={[
+          style.header,
+          {
+            backgroundColor: isDarkMode
+              ? darkTheme.colors.primaryContainer
+              : lightTheme.colors.primary,
+          },
+        ]}>
+        Thông tin người dùng
+      </Text>
+      <Text
+        style={{
+          padding: 15,
+          color: isDarkMode
+            ? darkTheme.colors.onBackground
+            : lightTheme.colors.onBackground,
+        }}>
+        UID: {user?.id}
+      </Text>
       <View
         style={{
           height: 1,
@@ -37,7 +57,64 @@ export const UserScreen = (props: HomeScreenProps) => {
           backgroundColor: 'gray',
         }}
       />
-      <Text style={{padding: 15}}>Email: {user?.email}</Text>
+      <Text
+        style={{
+          padding: 15,
+          color: isDarkMode
+            ? darkTheme.colors.onBackground
+            : lightTheme.colors.onBackground,
+        }}>
+        Email: {user?.email}
+      </Text>
+      <View
+        style={{
+          height: 1,
+          width: '100%',
+          backgroundColor: 'gray',
+        }}
+      />
+      <Text
+        style={{
+          padding: 15,
+          color: isDarkMode
+            ? darkTheme.colors.onBackground
+            : lightTheme.colors.onBackground,
+        }}>
+        Tên: {user?.ten}
+      </Text>
+      <View
+        style={{
+          height: 1,
+          width: '100%',
+          backgroundColor: 'gray',
+        }}
+      />
+      <Text
+        style={{
+          padding: 15,
+          color: isDarkMode
+            ? darkTheme.colors.onBackground
+            : lightTheme.colors.onBackground,
+        }}>
+        Ngày sinh:{' '}
+        {user ? format(user.ngay_sinh, 'dd/MM/yyyy') : 'Không có thông tin'}
+      </Text>
+      <View
+        style={{
+          height: 1,
+          width: '100%',
+          backgroundColor: 'gray',
+        }}
+      />
+      <Text
+        style={{
+          padding: 15,
+          color: isDarkMode
+            ? darkTheme.colors.onBackground
+            : lightTheme.colors.onBackground,
+        }}>
+        UID: {user?.id}
+      </Text>
       <View
         style={{
           height: 1,
@@ -46,8 +123,7 @@ export const UserScreen = (props: HomeScreenProps) => {
         }}
       />
       <Button
-        color="tomato"
-        title="Đăng xuất"
+        children={<Text style={{color: 'tomato'}}>Đăng xuất</Text>}
         onPress={() => {
           auth()
             .signOut()
@@ -55,13 +131,6 @@ export const UserScreen = (props: HomeScreenProps) => {
               setUser(undefined);
               props.navigation.navigate('Người dùng');
             });
-        }}
-      />
-      <View
-        style={{
-          height: 1,
-          width: '100%',
-          backgroundColor: 'gray',
         }}
       />
     </SafeAreaProvider>

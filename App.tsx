@@ -13,7 +13,7 @@ import {SettingScreen} from './screens/SettingScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {UserScreen} from './screens/UserScreen';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import LoginScreen from './screens/LoginScreen';
+import {LoginScreen} from './screens/LoginScreen';
 import {FoodDetailsScreen} from './screens/FoodDetailsScreen';
 import {createMaterialBottomTabNavigator} from 'react-native-paper/react-navigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -29,6 +29,7 @@ import {
   Text,
 } from 'react-native-paper';
 import {UserManager} from './data/UserManager';
+import {SignupScreen} from './screens/SignupScreen';
 
 export type FoodStackParamList = {
   'Trang chủ đặc sản': undefined;
@@ -213,6 +214,7 @@ const SettingsStackScreen = () => {
         name="Người dùng"
         component={user ? UserScreen : LoginScreen}
       />
+      <SettingsStack.Screen name="Đăng ký" component={SignupScreen} />
     </SettingsStack.Navigator>
   );
 };

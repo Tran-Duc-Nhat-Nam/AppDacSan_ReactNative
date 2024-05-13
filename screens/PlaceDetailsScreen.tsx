@@ -8,7 +8,7 @@ import {
   ScrollView,
   FlatList,
 } from 'react-native';
-import {style} from '../App';
+import {darkTheme, lightTheme, style} from '../App';
 import {useRoute} from '@react-navigation/native';
 import {NoiBan} from '../models/NoiBan';
 import React, {useEffect, useState} from 'react';
@@ -27,6 +27,7 @@ import {
 } from 'react-native-popup-menu';
 import {LuotDanhGiaNoiBanUI} from '../models/LuotDanhGIaNoiBan';
 import Modal from 'react-native-modal/dist/modal';
+import {url} from '../data/UserManager';
 
 export interface HomeScreenProps {
   navigation: NativeStackNavigationProp<any, any>;
@@ -50,9 +51,7 @@ export const PlaceDetailsScreen = (props: HomeScreenProps) => {
 
   const getDSFromApi = async () => {
     try {
-      const response = await fetch(
-        'https://dacsanimage-b5os5eg63q-de.a.run.app/noiban/' + itemId,
-      );
+      const response = await fetch(url + 'noiban/' + itemId);
       const json = await response.json();
       setNB(json);
       setLoading(false);
@@ -67,7 +66,9 @@ export const PlaceDetailsScreen = (props: HomeScreenProps) => {
     <SafeAreaProvider>
       <ScrollView
         style={{
-          backgroundColor: isDarkMode ? 'gold' : 'azure',
+          backgroundColor: isDarkMode
+            ? darkTheme.colors.background
+            : lightTheme.colors.background,
           flex: 1,
         }}>
         <Text style={style.header}>{nb ? nb.ten : ''}</Text>
