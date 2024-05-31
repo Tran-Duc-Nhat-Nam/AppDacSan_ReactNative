@@ -37,11 +37,10 @@ export class UserManager {
   };
 
   static signup = (username: string, password: string, user: NguoiDung) => {
-    const [nd, setND] = useState<NguoiDung>();
     auth()
       .createUserWithEmailAndPassword(username, password)
       .then(cre => {
-        this.addUser(user, setND);
+        this.addUser(user, cre.user);
         console.log('User ' + cre.user.uid + ' signed up!');
       })
       .catch(error => {
@@ -194,21 +193,21 @@ export class UserManager {
 
   static addUser = async (
     item: NguoiDung,
-    setState: Dispatch<SetStateAction<NguoiDung | undefined>>,
+    user: FirebaseAuthTypes.User | undefined,
   ) => {
-    auth().onAuthStateChanged(async user => {
-      if (user) {
-        item.id = user.uid;
-        const response = await fetch(url + 'danhgia/dacsan=' + item.id, {
-          method: 'POST',
-          body: JSON.stringify(item, (key, value) =>
-            UserManager.replacer(key, value),
-          ),
-        });
-        const json = await response.json();
-        setState(json);
-      }
-    });
+    if (user) {
+      item.id = user.uid;
+      const response = await fetch(url + 'nguoidung', {
+        method: 'POST',
+        headers: new Headers({
+          Authorization: 'Basic ' + btoa('admindacsan:Vinafood2024'),
+        }),
+        body: JSON.stringify(item, (key, value) =>
+          UserManager.replacer(key, value),
+        ),
+      });
+      const json = await response.json();
+    }
   };
 
   static updateUser = async (

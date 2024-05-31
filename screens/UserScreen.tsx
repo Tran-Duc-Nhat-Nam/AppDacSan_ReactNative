@@ -9,6 +9,7 @@ import {UserManager as UserManager} from '../data/UserManager';
 import {NguoiDung} from '../models/NguoiDung';
 import {Button} from 'react-native-paper';
 import {format} from 'date-fns';
+import DatePicker from 'react-native-date-picker';
 
 export interface HomeScreenProps {
   navigation: NativeStackNavigationProp<any, any>;
@@ -97,7 +98,7 @@ export const UserScreen = (props: HomeScreenProps) => {
             : lightTheme.colors.onBackground,
         }}>
         Ngày sinh:{' '}
-        {user ? format(user.ngay_sinh, 'dd/MM/yyyy') : 'Không có thông tin'}
+        {user?.ngay_sinh ? new Date(user?.ngay_sinh).toDateString() : ''}
       </Text>
       <View
         style={{

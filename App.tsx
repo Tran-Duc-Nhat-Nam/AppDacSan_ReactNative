@@ -214,7 +214,10 @@ const SettingsStackScreen = () => {
         name="Người dùng"
         component={user ? UserScreen : LoginScreen}
       />
-      <SettingsStack.Screen name="Đăng ký" component={SignupScreen} />
+      <SettingsStack.Screen
+        name="Đăng ký"
+        component={user ? FoodHomeScreen : SignupScreen}
+      />
     </SettingsStack.Navigator>
   );
 };
